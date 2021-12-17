@@ -12,14 +12,14 @@ $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "Connection failed: " . $e->getMessage();
 }
 
-$connection->query("CREATE TABLE article (
-    id int NOT NULL,
-    title varchar(255) NOT NULL,
-    content varchar(10000) NOT NULL,
-    author varchar(255) NOT NULL,
-    posted_at timestamp NOT NULL
-  ) 
-  ");
+// $connection->query("CREATE TABLE article (
+//     id int NOT NULL,
+//     title varchar(255) NOT NULL,
+//     content varchar(10000) NOT NULL,
+//     author varchar(255) NOT NULL,
+//     posted_at timestamp NOT NULL
+//   ) 
+//   ");
 
 
 $connection->query("INSERT INTO article (id, title, content, author, posted_at) VALUES

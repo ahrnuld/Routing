@@ -1,5 +1,5 @@
 <?php
-if (getenv('DATABASE_URL') !== null) {
+if (getenv('DATABASE_URL') != "") {
     $dbopts = parse_url(getenv('DATABASE_URL'));
     $type = "pgsql";
     $servername = $dbopts["host"];

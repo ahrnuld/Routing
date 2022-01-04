@@ -1,21 +1,34 @@
 <?php
 require __DIR__ . '/../../services/articleservice.php';
 
-class ArticleController {
+class ArticleController
+{
 
-    private $articleService; 
+    private $articleService;
 
     // initialize services
-    function __construct() {
+    function __construct()
+    {
         $this->articleService = new ArticleService();
     }
 
-    public function index() {
-      
-        // your code here
-        // return all articles in the database as JSON
-        
-        return null;       
+    public function index()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $json = file_get_contents('php://input');
+            $object = json_decode($json);
+
+            $article = new Article();
+            $article->setContent($object->content);
+            $article->setTitle($object->title);
+            $article->setAuthor("Mark");
+
+            $this->articleService->insert($article);
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] === "GET") {
+            $articles = $this->articleService->getAll();
+            echo json_encode($articles);
+        }
     }
 }
-?>

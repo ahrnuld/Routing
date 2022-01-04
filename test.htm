@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form id="myForm">
+        <label for="title">Title:</label><input type="text" id="title" />
+        <br>
+        <label for="content">Content:</label><textarea id="content"></textarea>
+        <br>
+        <button type="button" onclick="sendForm();">Send!</button>
+    </form>
+
+    <div id="articles">
+    </div>
+    <script>
+        function sendForm() {
+            const data = {
+                title: document.getElementById("title").value,
+                content: document.getElementById("content").value
+            };
+            fetch("http://localhost/api/article", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+                .then(result => {
+                    console.log(result)
+                    loadData();
+                }
+                )
+                .catch(error => console.log(error));
+        }
+
+
+        function loadData() {
+            fetch('http://localhost/api/article')
+                .then(result => result.json())
+                .then(articles => {
+                    document.getElementById("articles").innerHTML = "";
+                    articles.forEach(element => {
+                        var headline = document.createElement("h1");
+                        var paragraph = document.createElement("p");
+
+                        headline.innerHTML = element.title;
+                        paragraph.innerHTML = element.content;
+
+                        document.getElementById("articles").appendChild(headline);
+                        document.getElementById("articles").appendChild(paragraph);
+
+                        console.log(element.title)
+                    });
+                    console.log(articles)
+                })
+                .catch(error => console.log(error));
+        }
+
+        loadData();
+    </script>
+</body>
+
+</html>

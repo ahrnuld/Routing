@@ -28,6 +28,8 @@ class ArticleController
 
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             $articles = $this->articleService->getAll();
+
+            header('Content-Type: application/json; charset=utf-8');
             echo json_encode($articles);
         }
     }
